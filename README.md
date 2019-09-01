@@ -1,4 +1,3 @@
-# Babai-Graph-Isomorphism
-Source-code accompanying Bachelors Thesis about Babai's paper on Graph Isomorphism in Quasi-polynomial Time.
+# Babai-Graph-Isomorphism [![Build Status](https://travis-ci.com/DBrutski/Babai-Graph-Isomorphism.svg?branch=master)](https://travis-ci.com/DBrutski/Babai-Graph-Isomorphism) [![Coverage Status](https://coveralls.io/repos/github/DBrutski/Babai-Graph-Isomorphism/badge.svg?branch=master)](https://coveralls.io/github/DBrutski/Babai-Graph-Isomorphism?branch=master)
 
-[![Coverage Status](https://coveralls.io/repos/github/DBrutski/Babai-Graph-Isomorphism/badge.svg?branch=master)](https://coveralls.io/github/DBrutski/Babai-Graph-Isomorphism?branch=master)
+Source-code accompanying Bachelors Thesis about Babai's paper on Graph Isomorphism in Quasi-polynomial Time.
