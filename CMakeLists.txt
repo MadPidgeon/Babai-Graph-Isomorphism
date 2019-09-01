@@ -6,6 +6,8 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+enable_testing()
+
 add_subdirectory(action)
 add_subdirectory(coset)
 add_subdirectory(datastructures)
@@ -18,3 +20,4 @@ add_subdirectory(luks)
 add_subdirectory(permutation)
 add_subdirectory(unionfind)
 add_subdirectory(multi)
+add_subdirectory(catch2)

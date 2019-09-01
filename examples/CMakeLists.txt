@@ -12,3 +12,8 @@ target_link_libraries(groups_and_permutations PRIVATE permutation group)
 
 add_executable(luks_algorithm src/luks_algorithm.cc)
 target_link_libraries(luks_algorithm PRIVATE luks)
+
+add_executable(luks_algorithm_test test/luks_algorithm_test.cc)
+target_link_libraries(luks_algorithm_test PRIVATE luks catch2)
+
+
