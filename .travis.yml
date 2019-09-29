@@ -10,9 +10,7 @@ compiler:
 before_script:
   - mkdir build
   - cd build
+  - conan install ..
   - cmake ..
 
 script: make && make test
-
-after_success:
-  - codecov
