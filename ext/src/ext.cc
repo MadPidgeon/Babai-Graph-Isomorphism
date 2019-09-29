@@ -49,7 +49,13 @@ all_tuples::iterator::iterator(const self_type &other) {
   _tuple = other._tuple;
 }
 
-size_t all_tuples::size() const { return pow(_n, _r); }
+size_t all_tuples::size() const {
+  int k1 = _r;
+  int r = 1;
+  while (k1-- > 0)
+    r *= _n;
+  return r;
+}
 
 all_tuples::iterator::self_type all_tuples::iterator::operator++(int) {
   self_type i = *this;
@@ -248,13 +254,6 @@ size_t all_different_tuples::arity() const { return _r; }
 range all_different_tuples::parent_set() const { return range(0, _n); }
 
 all_different_tuples::all_different_tuples(int n, int r) : _n(n), _r(r) {}
-
-int pow(int n, int k) {
-  int r = 1;
-  while (k-- > 0)
-    r *= n;
-  return r;
-}
 
 std::vector<int> inverse_mapping(const std::vector<int> &d) {
   std::vector<int> r(d.size(), 0);

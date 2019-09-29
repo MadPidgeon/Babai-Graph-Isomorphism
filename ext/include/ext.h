@@ -332,7 +332,13 @@ template <int _r> typename all_arrays<_r>::iterator all_arrays<_r>::end() {
   return iterator(-1);
 }
 
-template <int _r> size_t all_arrays<_r>::size() const { return pow(_n, _r); }
+template <int _r> size_t all_arrays<_r>::size() const {
+  int k1 = _r;
+  int r = 1;
+  while (k1-- > 0)
+    r *= _n;
+  return r;
+}
 
 template <int _r> all_arrays<_r>::all_arrays(int n) : _n(n) {}
 
@@ -403,8 +409,6 @@ public:
   size_t arity() const;
   all_different_tuples(int n, int r);
 };
-
-int pow(int, int);
 
 template <typename T> std::vector<int> index_sort(const T &data) {
   int n = data.size();

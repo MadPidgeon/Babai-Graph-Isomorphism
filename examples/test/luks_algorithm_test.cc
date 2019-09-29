@@ -1,6 +1,6 @@
 #include <string>
 
-#include "catch2.h"
+#include "catch2/catch.hpp"
 #include "luks.h"
 
 int main() {
