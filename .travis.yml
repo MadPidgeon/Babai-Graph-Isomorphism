@@ -7,12 +7,16 @@ compiler:
   - clang
   - gcc
 
+install:
+  # Install conan
+  - pip install --user conan
+  # Automatic detection of your arch, compiler, etc.
+  - conan user
+
 before_script:
   - mkdir build
   - cd build
+  - conan install ..
   - cmake ..
 
 script: make && make test
-
-after_success:
-  - codecov
