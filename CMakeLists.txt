@@ -8,6 +8,9 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+find_package(Catch2 REQUIRED)
+
 if(CMAKE_BUILD_TYPE STREQUAL "coverage" OR CODE_COVERAGE)
     if("${CMAKE_C_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang")
         message("Building with llvm Code Coverage Tools")
