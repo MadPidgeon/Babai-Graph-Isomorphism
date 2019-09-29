@@ -11,5 +11,5 @@ This file contains settings on multi-threading.
 //#define THREADS		12
 //#include <future>
 //#else
-#define THREADS		1
+#define THREADS 1
 //#endif
