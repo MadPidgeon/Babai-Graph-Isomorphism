@@ -164,6 +164,8 @@ public:
   // returns the arity of the relational structure
   size_t arity() const;
 
+  std::vector<int> shape() const;
+
   // returns the domain (Omega) of the relational structure
   const std::deque<int> &domain() const;
 

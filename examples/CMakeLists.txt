@@ -15,5 +15,5 @@ target_link_libraries(luks_algorithm PRIVATE luks)
 
 add_executable(luks_algorithm_test test/luks_algorithm_test.cc)
 target_link_libraries(luks_algorithm_test PRIVATE luks Catch2::Catch2)
-
+add_test(${PROJECT_NAME} luks_algorithm_test)
 

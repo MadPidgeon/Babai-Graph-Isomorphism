@@ -611,6 +611,9 @@ void RelationalStructure::normalise() {
   for (auto &i : r)
     i = all_colours_found[i];
 }
+std::vector<int> RelationalStructure::shape() const {
+  return r;
+}
 
 std::ostream &operator<<(std::ostream &os, const RelationalStructure &X) {
   os << "(";
