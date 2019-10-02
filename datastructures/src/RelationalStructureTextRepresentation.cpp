@@ -9,7 +9,7 @@
 using namespace std;
 
 void print(const vector<int> &ints) {
-  printf("<");
+  printf("{");
   auto it = ints.begin();
   while (it + 1 != ints.end()) {
     printf("%d, ", *it);
@@ -18,7 +18,7 @@ void print(const vector<int> &ints) {
   if (it != ints.end()) {
     printf("%d", *it);
   }
-  printf(">");
+  printf("}");
 }
 
 size_t relationalStructureSize(const RelationalStructure &binaryStructure) {
@@ -53,10 +53,12 @@ void RelationalStructureTextRepresentation::printMatrixOfBinaryStructure()
       matrixView[tuple[0] - 1][tuple[1] - 1] = i;
     }
   }
+  printf("{");
   for (const auto &row : matrixView) {
     print(row);
-    printf("\n");
+    printf(",\n");
   }
+  printf("}\n");
 }
 RelationalStructureTextRepresentation::RelationalStructureTextRepresentation(
     const RelationalStructure& relationalStructure) : relationalStructure(relationalStructure) {}

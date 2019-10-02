@@ -76,7 +76,89 @@ TEST_CASE("Binary RelationalStructure") {
        {1, 0, 1, 0},
        {1, 1, 0, 1},
        {0, 0, 1, 0}});
+  RelationalStructure expected = toRelationalStructure(
+      {{0, 1, 1, 2},
+       {1, 0, 1, 2},
+       {1, 1, 0, 1},
+       {2, 2, 1, 0}});
   // clang-format on
   RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
   REQUIRE(given.arity() == 2);
+  //  REQUIRE(given == expected);
+}
+
+TEST_CASE("Individualize") {
+
+  // clang-format off
+  RelationalStructure given = toRelationalStructure(
+      {{0, 1, 1, 0},
+       {1, 0, 1, 0},
+       {1, 1, 0, 1},
+       {0, 0, 1, 0}});
+  // clang-format on
+
+  SECTION("First node") {
+    // clang-format off
+    RelationalStructure expected = toRelationalStructure(
+        {{1, 2, 2, 3},
+         {2, 0, 2, 3},
+         {2, 2, 0, 2},
+         {3, 3, 2, 0}});
+    // clang-format on
+    given.individualise(vector<int>{1});
+    RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
+    REQUIRE(given.arity() == 2);
+    //  REQUIRE(given == expected);
+  }
+
+  SECTION("Second node") {
+    // clang-format off
+    RelationalStructure expected = toRelationalStructure(
+        {{0, 2, 2, 3},
+         {2, 1, 2, 3},
+         {2, 2, 0, 2},
+         {3, 3, 2, 0}});
+    // clang-format on
+    given.individualise(vector<int>{2});
+    RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
+    REQUIRE(given.arity() == 2);
+    //  REQUIRE(given == expected);
+  }
+  SECTION("Two nodes assigns uniq color for each") {
+    // clang-format off
+    RelationalStructure expected = toRelationalStructure(
+        {{0, 2, 2, 3},
+         {2, 1, 2, 3},
+         {2, 2, 1, 2},
+         {3, 3, 2, 0}});
+    // clang-format on
+    given.individualise(vector<int>{2, 3});
+    RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
+    REQUIRE(given.arity() == 2);
+    //  REQUIRE(given == expected);
+  }
+}
+
+TEST_CASE("Refine") {
+
+  // clang-format off
+  RelationalStructure given = toRelationalStructure(
+      {{0, 1, 1, 0},
+       {1, 0, 1, 0},
+       {1, 1, 0, 1},
+       {0, 0, 1, 0}});
+  // clang-format on
+
+  SECTION("Without individualization") {
+    // clang-format off
+    RelationalStructure expected = toRelationalStructure(
+        {{1, 2, 2, 3},
+         {2, 0, 2, 3},
+         {2, 2, 0, 2},
+         {3, 3, 2, 0}});
+    // clang-format on
+    given.refine();
+    RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
+    //  REQUIRE(given == expected);
+  }
 }
