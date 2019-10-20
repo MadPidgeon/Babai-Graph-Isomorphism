@@ -7,11 +7,14 @@
 
 #include "datastructures.h"
 class RelationalStructureTextRepresentation {
-  const RelationalStructure & relationalStructure;
+  const RelationalStructure &relationalStructure;
+
 public:
-  explicit RelationalStructureTextRepresentation(const RelationalStructure & relationalStructure);
-  void printRelations() const ;
-  void printMatrixOfBinaryStructure() const ;
+  explicit RelationalStructureTextRepresentation(
+      const RelationalStructure &relationalStructure);
+  void printRelations() const;
+  void printMatrixOfBinaryStructure() const;
+  std::vector<std::vector<int>> matrixOfBinaryStructure() const;
 };
 
 #endif // BABAI_GRAPH_ISOMORPHISM_RELATIONALSTRUCTURETEXTREPRESENTATION_H

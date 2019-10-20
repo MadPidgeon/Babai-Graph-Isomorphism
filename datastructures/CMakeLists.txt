@@ -1,6 +1,6 @@
 project(datastructures)
 
-add_library(${PROJECT_NAME} src/${PROJECT_NAME}.cc src/RelationalStructureTextRepresentation.cpp)
+add_library(${PROJECT_NAME} src/${PROJECT_NAME}.cc src/RelationalStructureTextRepresentation.cpp src/RelationStructureToVectors.cpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 target_link_libraries(${PROJECT_NAME} PUBLIC ext unionfind)

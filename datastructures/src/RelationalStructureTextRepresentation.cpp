@@ -40,6 +40,19 @@ void RelationalStructureTextRepresentation::printRelations() const {
 }
 void RelationalStructureTextRepresentation::printMatrixOfBinaryStructure()
     const {
+  vector<vector<int>> matrixView = matrixOfBinaryStructure();
+  printf("{");
+  for (const auto &row : matrixView) {
+    print(row);
+    printf(",\n");
+  }
+  printf("}\n");
+}
+RelationalStructureTextRepresentation::RelationalStructureTextRepresentation(
+    const RelationalStructure& relationalStructure) : relationalStructure(relationalStructure) {}
+std::vector<std::vector<int>>
+
+RelationalStructureTextRepresentation::matrixOfBinaryStructure() const {
   const size_t arity = relationalStructure.arity();
   assert(arity == 2);
   size_t size = relationalStructureSize(relationalStructure);
@@ -53,12 +66,5 @@ void RelationalStructureTextRepresentation::printMatrixOfBinaryStructure()
       matrixView[tuple[0] - 1][tuple[1] - 1] = i;
     }
   }
-  printf("{");
-  for (const auto &row : matrixView) {
-    print(row);
-    printf(",\n");
-  }
-  printf("}\n");
+  return matrixView;
 }
-RelationalStructureTextRepresentation::RelationalStructureTextRepresentation(
-    const RelationalStructure& relationalStructure) : relationalStructure(relationalStructure) {}

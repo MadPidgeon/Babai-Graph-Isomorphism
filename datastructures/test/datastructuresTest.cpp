@@ -3,56 +3,12 @@
 
 #include "datastructures.h"
 #include "catch2/catch.hpp"
+#include <RelationStructureToVectors.h>
 #include <RelationalStructureTextRepresentation.h>
 
 using namespace std;
 
-typedef vector<vector<int>> Matrix;
 
-Matrix toVectors(initializer_list<initializer_list<int>> matrix) {
-  Matrix result(matrix.size());
-  int i = 0;
-  initializer_list<initializer_list<int>>::const_iterator row = matrix.begin();
-  while (row != matrix.end()) {
-    result[i] = *row;
-    row++;
-    i++;
-  }
-  return result;
-}
-
-vector<int> relationsList(const Matrix &adjacencyMatrix) {
-  size_t size = adjacencyMatrix.size();
-  vector<int> relations(size * size);
-  for (size_t i = 0; i < size; i++) {
-    for (size_t j = 0; j < size; j++) {
-      vector<int> t({(int)i, (int)j});
-      if (i == j) {
-        relations[polynomial_evaluation(t, size)] = 0;
-      } else if (adjacencyMatrix[i][j] != 0) {
-        relations[polynomial_evaluation(t, size)] = 1;
-      } else {
-        relations[polynomial_evaluation(t, size)] = 2;
-      }
-    }
-  }
-  return relations;
-}
-
-RelationalStructure toRelationalStructure(const Matrix &adjacencyMatrix) {
-  int size = adjacencyMatrix.size();
-  std::deque<int> vertices(size);
-  iota(vertices.begin(), vertices.end(), 1);
-  vector<int> relations = relationsList(adjacencyMatrix);
-  RelationalStructure configuration(std::move(vertices), std::move(relations),
-                                    2);
-  return configuration;
-}
-
-RelationalStructure
-toRelationalStructure(initializer_list<initializer_list<int>> adjacencyMatrix) {
-  return toRelationalStructure(toVectors(adjacencyMatrix));
-}
 
 TEST_CASE("Relations list") {
   // clang-format off
@@ -76,15 +32,15 @@ TEST_CASE("Binary RelationalStructure") {
        {1, 0, 1, 0},
        {1, 1, 0, 1},
        {0, 0, 1, 0}});
-  RelationalStructure expected = toRelationalStructure(
+  vector<vector<int>> expected = toVectors(
       {{0, 1, 1, 2},
        {1, 0, 1, 2},
        {1, 1, 0, 1},
        {2, 2, 1, 0}});
   // clang-format on
-  RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
-  REQUIRE(given.arity() == 2);
-  //  REQUIRE(given == expected);
+  const vector<std::vector<int>> &actual =
+      RelationalStructureTextRepresentation(given).matrixOfBinaryStructure();
+  REQUIRE(actual == expected);
 }
 
 TEST_CASE("Individualize") {
@@ -97,45 +53,47 @@ TEST_CASE("Individualize") {
        {0, 0, 1, 0}});
   // clang-format on
 
+  const RelationalStructureTextRepresentation &textRepresentation =
+      RelationalStructureTextRepresentation(given);
   SECTION("First node") {
     // clang-format off
-    RelationalStructure expected = toRelationalStructure(
+    vector<vector<int>> expected = toVectors(
         {{1, 2, 2, 3},
          {2, 0, 2, 3},
          {2, 2, 0, 2},
          {3, 3, 2, 0}});
     // clang-format on
     given.individualise(vector<int>{1});
-    RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
-    REQUIRE(given.arity() == 2);
-    //  REQUIRE(given == expected);
+    const vector<std::vector<int>> &actual =
+        textRepresentation.matrixOfBinaryStructure();
+    REQUIRE(actual == expected);
   }
 
   SECTION("Second node") {
     // clang-format off
-    RelationalStructure expected = toRelationalStructure(
+    vector<vector<int>> expected = toVectors(
         {{0, 2, 2, 3},
          {2, 1, 2, 3},
          {2, 2, 0, 2},
          {3, 3, 2, 0}});
     // clang-format on
     given.individualise(vector<int>{2});
-    RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
-    REQUIRE(given.arity() == 2);
-    //  REQUIRE(given == expected);
+    const vector<std::vector<int>> &actual =
+        textRepresentation.matrixOfBinaryStructure();
+    REQUIRE(actual == expected);
   }
   SECTION("Two nodes assigns uniq color for each") {
     // clang-format off
-    RelationalStructure expected = toRelationalStructure(
-        {{0, 2, 2, 3},
-         {2, 1, 2, 3},
-         {2, 2, 1, 2},
-         {3, 3, 2, 0}});
+    vector<vector<int>> expected = toVectors(
+        {{0, 3, 3, 4},
+         {3, 1, 3, 4},
+         {3, 3, 2, 3},
+         {4, 4, 3, 0}});
     // clang-format on
     given.individualise(vector<int>{2, 3});
-    RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
-    REQUIRE(given.arity() == 2);
-    //  REQUIRE(given == expected);
+    const vector<std::vector<int>> &actual =
+        textRepresentation.matrixOfBinaryStructure();
+    REQUIRE(actual == expected);
   }
 }
 
@@ -148,17 +106,36 @@ TEST_CASE("Refine") {
        {1, 1, 0, 1},
        {0, 0, 1, 0}});
   // clang-format on
+  const RelationalStructureTextRepresentation &givenRepresentation =
+      RelationalStructureTextRepresentation(given);
 
   SECTION("Without individualization") {
     // clang-format off
-    RelationalStructure expected = toRelationalStructure(
-        {{1, 2, 2, 3},
-         {2, 0, 2, 3},
-         {2, 2, 0, 2},
-         {3, 3, 2, 0}});
+    vector<vector<int>> expected = toVectors(
+        {{1, 5, 3, 9},
+         {5, 1, 3, 9},
+         {4, 4, 0, 7},
+         {8, 8, 6, 2}});
     // clang-format on
     given.refine();
-    RelationalStructureTextRepresentation(given).printMatrixOfBinaryStructure();
-    //  REQUIRE(given == expected);
+    givenRepresentation.printMatrixOfBinaryStructure();
+    const vector<std::vector<int>> &actual =
+        givenRepresentation.matrixOfBinaryStructure();
+    REQUIRE(actual == expected);
+  }
+
+  SECTION("twice should be idempotent") {
+    // clang-format off
+    vector<vector<int>> expected = toVectors(
+        {{1, 5, 3, 9},
+         {5, 1, 3, 9},
+         {4, 4, 0, 7},
+         {8, 8, 6, 2}});
+    // clang-format on
+    given.refine();
+    given.refine();
+    const vector<std::vector<int>> &actual =
+        givenRepresentation.matrixOfBinaryStructure();
+    REQUIRE(actual == expected);
   }
 }
